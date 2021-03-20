@@ -1,2 +1,3 @@
 # Lazy_Buddy
-Voice Assistants for Prgrammers
+Voice Assistant for Programmers
+HackNITR
