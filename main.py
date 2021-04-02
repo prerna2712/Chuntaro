@@ -13,6 +13,7 @@ import pytz
 import pickle
 import subprocess
 import webbrowser
+import selenium
 
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
@@ -70,9 +71,9 @@ def get_events(day,service):
     events = events_result.get('items', [])
 
     if not events:
-        speak('No upcoming events found.')
+        speak('No upcoming events found sir.')
     else:
-        speak(f"You have {len(events)} events on this day")
+        speak(f"You have {len(events)} events on this day sir")
 
         for event in events:
             start = event['start'].get('dateTime', event['start'].get('date'))
@@ -139,7 +140,7 @@ def note(text):
     subprocess.Popen(["gedit", file_name])
 
 
-WAKE = "ok"
+WAKE = "ron"
 SERVICE = authenticate_google()
 print("Start")
 
@@ -148,7 +149,7 @@ while True:
     text = get_audio().lower()
 
     if text.count(WAKE)>0 :
-        speak("Ready")
+        speak("Ready sir")
         text = get_audio()
         if text.count("open")>0 :
             if "open youtube" in text:
@@ -189,12 +190,15 @@ while True:
                 if date:
                     get_events(date,SERVICE)
                 else:
-                    speak("I don't understand")
+                    speak("I don't understand, my apologies sir")
 
         NOTE_STRS = ["take a note", "write this down", "remember this"]
         for phrase in NOTE_STRS:
             if phrase in text:
-                speak("What would you like me to write down?")
+                speak("What would you like me to write down sir?")
                 note_text = get_audio().lower()
                 note(note_text)
                 speak("I've made a note of that.")
+
+    if text.count("stop") > 0:
+        break
